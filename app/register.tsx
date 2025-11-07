@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import {
   Alert,
   Keyboard,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -45,43 +47,51 @@ const RegisterScreen = () => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>
-        <TextInput
-          placeholder="მეილი"
-          onChangeText={setEmail}
-          value={email}
-          keyboardType="email-address"
-          autoCapitalize="none"
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="პაროლი (მინ. 6 სიმბოლო)"
-          onChangeText={setPassword}
-          value={password}
-          secureTextEntry
-          style={styles.input}
-        />
-        <Pressable
-          onPress={handleRegister}
-          disabled={loading}
-          style={[styles.button, loading && styles.buttonDisabled]}
-        >
-          <Text style={styles.buttonText}>
-            {loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"}
-          </Text>
-        </Pressable>
-        <Pressable
-          onPress={() => router.push("/login")}
-          style={styles.linkButton}
-        >
-          <Text style={styles.linkText}>
-            თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად
-          </Text>
-        </Pressable>
-      </View>
-    </TouchableWithoutFeedback>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      //თუ ანდროიდზე გამოიყენება სიმაღლეს შეუცვლის , ხოლო თუ აიფონზე padding
+      style={{ flex: 1 }}
+    >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <View style={styles.container}>
+          <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>
+          <TextInput
+            placeholder="მეილი"
+            onChangeText={setEmail}
+            value={email}
+            keyboardType="email-address"
+            autoCapitalize="none"
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="პაროლი (მინ. 6 სიმბოლო)"
+            onChangeText={setPassword}
+            value={password}
+            secureTextEntry
+            style={styles.input}
+          />
+          <Pressable
+            onPress={handleRegister}
+            disabled={loading}
+            style={[styles.button, loading && styles.buttonDisabled]}
+          >
+            <Text style={styles.buttonText}>
+              {loading
+                ? "მიმდინარეობს ანგარიშის შექმნა ..."
+                : "ანგარიშის შექმნა"}
+            </Text>
+          </Pressable>
+          <Pressable
+            onPress={() => router.push("/login")}
+            style={styles.linkButton}
+          >
+            <Text style={styles.linkText}>
+              თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად
+            </Text>
+          </Pressable>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 };
 

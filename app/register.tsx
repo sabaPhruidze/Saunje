@@ -4,10 +4,12 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
   Alert,
+  Keyboard,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 
@@ -35,7 +37,6 @@ const RegisterScreen = () => {
       );
     } catch (e: any) {
       setLoading(false);
-      console.error(e);
       Alert.alert(
         "რეგისტრაციის შეცდომა",
         "მომხმარებელი მითითებული მეილით რეგისტრირებულია"
@@ -44,41 +45,43 @@ const RegisterScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>
-      <TextInput
-        placeholder="მეილი"
-        onChangeText={setEmail}
-        value={email}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="პაროლი (მინ. 6 სიმბოლო)"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry
-        style={styles.input}
-      />
-      <Pressable
-        onPress={handleRegister}
-        disabled={loading}
-        style={[styles.button, loading && styles.buttonDisabled]}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"}
-        </Text>
-      </Pressable>
-      <Pressable
-        onPress={() => router.push("/login")}
-        style={styles.linkButton}
-      >
-        <Text style={styles.linkText}>
-          თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად
-        </Text>
-      </Pressable>
-    </View>
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>
+        <TextInput
+          placeholder="მეილი"
+          onChangeText={setEmail}
+          value={email}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="პაროლი (მინ. 6 სიმბოლო)"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+          style={styles.input}
+        />
+        <Pressable
+          onPress={handleRegister}
+          disabled={loading}
+          style={[styles.button, loading && styles.buttonDisabled]}
+        >
+          <Text style={styles.buttonText}>
+            {loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"}
+          </Text>
+        </Pressable>
+        <Pressable
+          onPress={() => router.push("/login")}
+          style={styles.linkButton}
+        >
+          <Text style={styles.linkText}>
+            თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად
+          </Text>
+        </Pressable>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

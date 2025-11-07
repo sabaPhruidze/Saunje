@@ -1,5 +1,6 @@
 import { auth } from "@/firebaseConfing";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
@@ -52,6 +53,7 @@ const RegisterScreen = () => {
       //თუ ანდროიდზე გამოიყენება სიმაღლეს შეუცვლის , ხოლო თუ აიფონზე padding
       style={{ flex: 1 }}
     >
+      <StatusBar style="dark" />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
           <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>

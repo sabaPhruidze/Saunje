@@ -25,7 +25,7 @@ export default function RootLayout() {
           options={{ presentation: "modal", title: "Modal" }}
         />
         <Stack.Screen name="login" options={{ title: "login" }} />
-        <Stack.Screen name="regsiter" options={{ title: "register" }} />
+        <Stack.Screen name="register" options={{ title: "register" }} />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>

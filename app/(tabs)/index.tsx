@@ -4,8 +4,8 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>მთავარი ეკრანი (Home)</Text>
-      <Link href="/login" style={styles.link}>
-        <Text style={styles.linkText}>გადასვლა Login გვერდზე</Text>
+      <Link href="/register" style={styles.link}>
+        <Text style={styles.linkText}>გადასვლა Register გვერდზე</Text>
       </Link>
     </View>
   );

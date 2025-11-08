@@ -8,13 +8,13 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  Pressable,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
 
+import AuthLink from "@/components/auth/AuthLink";
 import FormButton from "@/components/auth/FormButton";
 import FormInput from "@/components/auth/FormInput";
 
@@ -79,14 +79,10 @@ const RegisterScreen = () => {
               loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"
             }
           />
-          <Pressable
+          <AuthLink
+            linkText=" თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად"
             onPress={() => router.push("/login")}
-            style={styles.linkButton}
-          >
-            <Text style={styles.linkText}>
-              თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად
-            </Text>
-          </Pressable>
+          />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -108,13 +104,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 24,
     color: "#333",
-  },
-  linkButton: {
-    marginTop: 20,
-  },
-  linkText: {
-    color: "#8b4513",
-    textAlign: "center",
-    fontSize: 16,
   },
 });

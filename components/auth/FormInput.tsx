@@ -31,13 +31,13 @@ const styles = StyleSheet.create({
   },
   inputLight: {
     height: 50,
-    backgroundColor: "#252525",
+    backgroundColor: "#ddd",
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "#444",
     paddingHorizontal: 15,
     marginBottom: 12,
     fontSize: 16,
-    color: "#FFFFFF",
+    color: "#333",
   },
 });

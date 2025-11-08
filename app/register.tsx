@@ -5,13 +5,11 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
   Alert,
-  Keyboard,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
   StyleSheet,
   Text,
-  TouchableWithoutFeedback,
-  View,
 } from "react-native";
 
 import AuthLink from "@/components/auth/AuthLink";
@@ -25,6 +23,7 @@ const RegisterScreen = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+
   const handleRegister = async () => {
     if (!email || !password) {
       Alert.alert("შეცდომა", "გთხოვთ , შეავსოთ ყველა ველი");
@@ -55,50 +54,52 @@ const RegisterScreen = () => {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       //თუ ანდროიდზე გამოიყენება სიმაღლეს შეუცვლის , ხოლო თუ აიფონზე padding
-      style={{ flex: 1 }}
+      style={Object.is(theme, "light") ? styles.kavLight : styles.kavDark}
     >
       <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View
+      <ScrollView
+        style={{
+          flex: 1,
+        }}
+        contentContainerStyle={
+          Object.is(theme, "light")
+            ? styles.containerLight
+            : styles.containerDark
+        }
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text
           style={
-            Object.is(theme, "light")
-              ? styles.containerLight
-              : styles.containerDark
+            Object.is(theme, "light") ? styles.titleLight : styles.titleDark
           }
         >
-          <Text
-            style={
-              Object.is(theme, "light") ? styles.titleLight : styles.titleDark
-            }
-          >
-            სარეგისტრაციო სივრცე
-          </Text>
-          <FormInput
-            placeholder="მეილი"
-            onChangeText={setEmail}
-            value={email}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
-          <FormInput
-            placeholder="პაროლი (მინ. 6 სიმბოლო)"
-            onChangeText={setPassword}
-            value={password}
-            secureTextEntry
-          />
-          <FormButton
-            onPress={handleRegister}
-            loading={loading}
-            title={
-              loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"
-            }
-          />
-          <AuthLink
-            linkText=" თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად"
-            onPress={() => router.push("/login")}
-          />
-        </View>
-      </TouchableWithoutFeedback>
+          სარეგისტრაციო სივრცე
+        </Text>
+        <FormInput
+          placeholder="მეილი"
+          onChangeText={setEmail}
+          value={email}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <FormInput
+          placeholder="პაროლი (მინ. 6 სიმბოლო)"
+          onChangeText={setPassword}
+          value={password}
+          secureTextEntry
+        />
+        <FormButton
+          onPress={handleRegister}
+          loading={loading}
+          title={
+            loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"
+          }
+        />
+        <AuthLink
+          linkText=" თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად"
+          onPress={() => router.push("/login")}
+        />
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };
@@ -106,14 +107,22 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  containerLight: {
+  kavLight: {
     flex: 1,
+    backgroundColor: "#F5F5F5",
+  },
+  kavDark: {
+    flex: 1,
+    backgroundColor: "#121212",
+  },
+  containerLight: {
+    flexGrow: 1,
     justifyContent: "center",
     padding: 16,
     backgroundColor: "#F5F5F5",
   },
   containerDark: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
     padding: 16,
     backgroundColor: "#121212",

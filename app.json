@@ -13,8 +13,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE"
+       "backgroundColor": "#121212",
+        "barStyle": "light-content"
       },
+      "softwareKeyboardLayoutMode": "resize",
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },

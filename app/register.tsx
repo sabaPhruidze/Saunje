@@ -11,10 +11,12 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
+
+import FormButton from "@/components/auth/FormButton";
+import FormInput from "@/components/auth/FormInput";
 
 const RegisterScreen = () => {
   const [email, setEmail] = useState("");
@@ -57,32 +59,26 @@ const RegisterScreen = () => {
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <View style={styles.container}>
           <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>
-          <TextInput
+          <FormInput
             placeholder="მეილი"
             onChangeText={setEmail}
             value={email}
             keyboardType="email-address"
             autoCapitalize="none"
-            style={styles.input}
           />
-          <TextInput
+          <FormInput
             placeholder="პაროლი (მინ. 6 სიმბოლო)"
             onChangeText={setPassword}
             value={password}
             secureTextEntry
-            style={styles.input}
           />
-          <Pressable
+          <FormButton
             onPress={handleRegister}
-            disabled={loading}
-            style={[styles.button, loading && styles.buttonDisabled]}
-          >
-            <Text style={styles.buttonText}>
-              {loading
-                ? "მიმდინარეობს ანგარიშის შექმნა ..."
-                : "ანგარიშის შექმნა"}
-            </Text>
-          </Pressable>
+            loading={loading}
+            title={
+              loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"
+            }
+          />
           <Pressable
             onPress={() => router.push("/login")}
             style={styles.linkButton}
@@ -112,30 +108,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 24,
     color: "#333",
-  },
-  input: {
-    height: 50,
-    backgroundColor: "#ddd",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    marginBottom: 12,
-    fontSize: 16,
-  },
-  button: {
-    backgroundColor: "#8b4513",
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonDisabled: {
-    backgroundColor: "#AE8E7A",
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-    fontWeight: "600",
   },
   linkButton: {
     marginTop: 20,

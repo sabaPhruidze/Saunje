@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeContext";
 import React from "react";
 import { Pressable, StyleSheet, Text } from "react-native";
 
@@ -8,13 +9,28 @@ interface FormButtonProps {
 }
 
 const FormButton = ({ title, onPress, loading }: FormButtonProps) => {
+  const { theme } = useTheme();
   return (
     <Pressable
       onPress={onPress}
       disabled={loading}
-      style={[styles.button, loading && styles.buttonDisabled]}
+      style={[
+        Object.is(theme, "light") ? styles.buttonLight : styles.buttonDark,
+        loading &&
+          (Object.is(theme, "light")
+            ? styles.buttonDisabledLight
+            : styles.buttonDisabledDark),
+      ]}
     >
-      <Text style={styles.buttonText}>{title}</Text>
+      <Text
+        style={
+          Object.is(theme, "light")
+            ? styles.buttonTextLight
+            : styles.buttonTextDark
+        }
+      >
+        {title}
+      </Text>
     </Pressable>
   );
 };
@@ -22,19 +38,39 @@ const FormButton = ({ title, onPress, loading }: FormButtonProps) => {
 export default FormButton;
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "#8b4513",
+  buttonLight: {
+    backgroundColor: "#8B4513",
     paddingVertical: 15,
     borderRadius: 8,
     alignItems: "center",
     marginTop: 10,
   },
-  buttonDisabled: {
+
+  buttonDark: {
+    backgroundColor: "#A0522D",
+    paddingVertical: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  buttonDisabledLight: {
     backgroundColor: "#AE8E7A",
   },
-  buttonText: {
+
+  buttonDisabledDark: {
+    backgroundColor: "#5C3317",
+  },
+
+  buttonTextLight: {
     color: "white",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
+  },
+
+  buttonTextDark: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

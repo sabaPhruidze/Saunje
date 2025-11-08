@@ -17,8 +17,10 @@ import {
 import AuthLink from "@/components/auth/AuthLink";
 import FormButton from "@/components/auth/FormButton";
 import FormInput from "@/components/auth/FormInput";
+import { useTheme } from "@/context/ThemeContext";
 
 const RegisterScreen = () => {
+  const { theme, toggleTheme } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -55,10 +57,22 @@ const RegisterScreen = () => {
       //თუ ანდროიდზე გამოიყენება სიმაღლეს შეუცვლის , ხოლო თუ აიფონზე padding
       style={{ flex: 1 }}
     >
-      <StatusBar style="dark" />
+      <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-        <View style={styles.container}>
-          <Text style={styles.title}>სარეგისტრაციო სივრცე</Text>
+        <View
+          style={
+            Object.is(theme, "light")
+              ? styles.containerLight
+              : styles.containerDark
+          }
+        >
+          <Text
+            style={
+              Object.is(theme, "light") ? styles.titleLight : styles.titleDark
+            }
+          >
+            სარეგისტრაციო სივრცე
+          </Text>
           <FormInput
             placeholder="მეილი"
             onChangeText={setEmail}
@@ -92,17 +106,30 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  container: {
+  containerLight: {
     flex: 1,
     justifyContent: "center",
     padding: 16,
     backgroundColor: "#F5F5F5",
   },
-  title: {
+  containerDark: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#121212",
+  },
+  titleLight: {
     fontSize: 28,
     fontWeight: "600",
     textAlign: "center",
     marginBottom: 24,
     color: "#333",
+  },
+  titleDark: {
+    fontSize: 28,
+    fontWeight: "600",
+    textAlign: "center",
+    marginBottom: 24,
+    color: "#FFFFFF",
   },
 });

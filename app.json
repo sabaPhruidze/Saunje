@@ -14,6 +14,7 @@
     "android": {
       "adaptiveIcon": {
        "backgroundColor": "#121212",
+       "userInterfaceStyle": "automatic",
         "barStyle": "light-content"
       },
       "softwareKeyboardLayoutMode": "resize",

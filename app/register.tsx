@@ -82,11 +82,13 @@ const RegisterScreen = () => {
           onChangeText={setEmail}
           value={email}
           keyboardType="email-address"
+          keyboardAppearance="dark"
           autoCapitalize="none"
         />
         <FormInput
           placeholder="პაროლი (მინ. 6 სიმბოლო)"
           onChangeText={setPassword}
+          keyboardAppearance="dark"
           value={password}
           secureTextEntry
         />

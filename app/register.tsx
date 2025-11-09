@@ -32,11 +32,7 @@ const RegisterScreen = () => {
     }
     setLoading(true); //ამ დროს დაიწყებს ჩატვირთვას
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      await createUserWithEmailAndPassword(auth, email, password);
       setLoading(false);
       Alert.alert(
         "წარმატება",

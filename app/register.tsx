@@ -15,6 +15,7 @@ import {
 import AuthLink from "@/components/auth/AuthLink";
 import FormButton from "@/components/auth/FormButton";
 import FormInput from "@/components/auth/FormInput";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 
 const RegisterScreen = () => {
@@ -57,6 +58,7 @@ const RegisterScreen = () => {
       style={Object.is(theme, "light") ? styles.kavLight : styles.kavDark}
     >
       <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
+
       <ScrollView
         style={{
           flex: 1,
@@ -100,6 +102,7 @@ const RegisterScreen = () => {
           onPress={() => router.push("/login")}
         />
       </ScrollView>
+      <ThemeToggle />
     </KeyboardAvoidingView>
   );
 };
@@ -110,10 +113,12 @@ const styles = StyleSheet.create({
   kavLight: {
     flex: 1,
     backgroundColor: "#F5F5F5",
+    position: "relative",
   },
   kavDark: {
     flex: 1,
     backgroundColor: "#121212",
+    position: "relative",
   },
   containerLight: {
     flexGrow: 1,

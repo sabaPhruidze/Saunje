@@ -34,6 +34,7 @@ const LoginScreen = () => {
       await signInWithEmailAndPassword(auth, email, password);
       setLoading(false);
       Alert.alert("ავტორიზაცია წარმატებით დასრულდა");
+      router.replace("/(tabs)");
     } catch (e) {
       setLoading(false);
       Alert.alert("ავტორიზაციის შეცდომა", "იმეილი ან პაროლი არასწორია");

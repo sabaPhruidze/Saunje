@@ -6,7 +6,6 @@ import FormButton from "@/components/auth/FormButton";
 import FormInput from "@/components/auth/FormInput";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
-import { useHeaderHeight } from "@react-navigation/elements";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -22,10 +21,7 @@ import {
   View,
 } from "react-native";
 
-import {
-  SafeAreaView,
-  useSafeAreaInsets,
-} from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = () => {
   const { theme, toggleTheme } = useTheme();
@@ -52,10 +48,6 @@ const LoginScreen = () => {
     }
   };
 
-  const insets = useSafeAreaInsets();
-  const headerHeight = useHeaderHeight();
-  const keyboardVerticalOffset =
-    Platform.OS === "ios" ? headerHeight + insets.top : 0;
   return (
     <SafeAreaView
       style={Object.is(theme, "light") ? styles.safeLight : styles.safeDark}
@@ -71,7 +63,6 @@ const LoginScreen = () => {
           <KeyboardAvoidingView
             style={styles.flex}
             behavior={Object.is(Platform.OS, "ios") ? "padding" : "height"}
-            keyboardVerticalOffset={keyboardVerticalOffset}
           >
             <ScrollView
               style={{ flex: 1 }}

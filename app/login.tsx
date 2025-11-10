@@ -136,16 +136,6 @@ const styles = StyleSheet.create({
   flex: {
     flex: 1,
   },
-  kavLight: {
-    flex: 1,
-    backgroundColor: "#F5F5F5",
-    position: "relative",
-  },
-  kavDark: {
-    flex: 1,
-    backgroundColor: "#121212",
-    position: "relative",
-  },
   containerLight: {
     flexGrow: 1,
     justifyContent: "center",

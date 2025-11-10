@@ -5,11 +5,14 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
   StyleSheet,
   Text,
+  TouchableWithoutFeedback,
+  View,
 } from "react-native";
 
 import AuthLink from "@/components/auth/AuthLink";
@@ -17,6 +20,7 @@ import FormButton from "@/components/auth/FormButton";
 import FormInput from "@/components/auth/FormInput";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const RegisterScreen = () => {
   const { theme, toggleTheme } = useTheme();
@@ -49,75 +53,89 @@ const RegisterScreen = () => {
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      //თუ ანდროიდზე გამოიყენება სიმაღლეს შეუცვლის , ხოლო თუ აიფონზე padding
-      style={Object.is(theme, "light") ? styles.kavLight : styles.kavDark}
+    <SafeAreaView
+      style={Object.is(theme, "light") ? styles.safeLight : styles.safeDark}
+      edges={["top", "bottom", "left", "right"]}
     >
       <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
-
-      <ScrollView
-        style={{
-          flex: 1,
-        }}
-        contentContainerStyle={
-          Object.is(theme, "light")
-            ? styles.containerLight
-            : styles.containerDark
-        }
-        keyboardShouldPersistTaps="handled"
+      <TouchableWithoutFeedback
+        onPress={() => Keyboard.dismiss}
+        accessible={false}
       >
-        <Text
-          style={
-            Object.is(theme, "light") ? styles.titleLight : styles.titleDark
-          }
-        >
-          სარეგისტრაციო სივრცე
-        </Text>
-        <FormInput
-          placeholder="მეილი"
-          onChangeText={setEmail}
-          value={email}
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          autoCapitalize="none"
-        />
-        <FormInput
-          placeholder="პაროლი (მინ. 6 სიმბოლო)"
-          onChangeText={setPassword}
-          keyboardAppearance="dark"
-          value={password}
-          secureTextEntry
-        />
-        <FormButton
-          onPress={handleRegister}
-          loading={loading}
-          title={
-            loading ? "მიმდინარეობს ანგარიშის შექმნა ..." : "ანგარიშის შექმნა"
-          }
-        />
-        <AuthLink
-          linkText=" თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად"
-          onPress={() => router.push("/login")}
-        />
-      </ScrollView>
-      <ThemeToggle />
-    </KeyboardAvoidingView>
+        <View style={styles.flex}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            //თუ ანდროიდზე გამოიყენება სიმაღლეს შეუცვლის , ხოლო თუ აიფონზე padding
+            style={styles.flex}
+          >
+            <ScrollView
+              style={styles.flex}
+              contentContainerStyle={
+                Object.is(theme, "light")
+                  ? styles.containerLight
+                  : styles.containerDark
+              }
+              keyboardShouldPersistTaps="handled"
+            >
+              <ThemeToggle />
+              <Text
+                style={
+                  Object.is(theme, "light")
+                    ? styles.titleLight
+                    : styles.titleDark
+                }
+              >
+                სარეგისტრაციო სივრცე
+              </Text>
+              <FormInput
+                placeholder="მეილი"
+                onChangeText={setEmail}
+                value={email}
+                keyboardType="email-address"
+                keyboardAppearance="dark"
+                autoCapitalize="none"
+              />
+              <FormInput
+                placeholder="პაროლი (მინ. 6 სიმბოლო)"
+                onChangeText={setPassword}
+                keyboardAppearance="dark"
+                value={password}
+                secureTextEntry
+              />
+              <FormButton
+                onPress={handleRegister}
+                loading={loading}
+                title={
+                  loading
+                    ? "მიმდინარეობს ანგარიშის შექმნა ..."
+                    : "ანგარიშის შექმნა"
+                }
+              />
+              <AuthLink
+                linkText=" თუ გაქვს ანგარიში შექმნილი ,გადადი ამ გვერდზე შესასვლელად"
+                onPress={() => router.push("/login")}
+              />
+            </ScrollView>
+          </KeyboardAvoidingView>
+        </View>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   );
 };
 
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  kavLight: {
+  safeLight: {
     flex: 1,
     backgroundColor: "#F5F5F5",
-    position: "relative",
   },
-  kavDark: {
+  safeDark: {
     flex: 1,
     backgroundColor: "#121212",
-    position: "relative",
+  },
+  flex: {
+    flex: 1,
   },
   containerLight: {
     flexGrow: 1,

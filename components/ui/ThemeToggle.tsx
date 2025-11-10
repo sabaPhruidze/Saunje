@@ -22,7 +22,7 @@ export default ThemeToggle;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 55,
+    top: 30,
     right: 16,
     zIndex: 1,
     padding: 5,

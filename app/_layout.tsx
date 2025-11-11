@@ -1,25 +1,28 @@
+// app/_layout.tsx
 import ThemeProvider from "@/context/ThemeContext";
-import { Stack } from "expo-router";
+import { UserProvider, useAuth } from "@/context/UserContext";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/hooks/use-color-scheme";
+export const unstable_settings = { anchor: "(tabs)" };
 
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
-
-export default function RootLayout() {
+function AppContent() {
+  const { user, loading } = useAuth(); // ✅ now inside the provider
+  const router = useRouter();
   const colorScheme = useColorScheme();
 
+  useEffect(() => {
+    if (loading) return;
+    router.replace(user ? "/(tabs)" : "/login");
+  }, [user, loading, router]);
+
   return (
-    <ThemeProvider>
+    <>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
         <Stack.Screen
           name="login"
           options={{ title: "login", headerShown: false }}
@@ -30,6 +33,16 @@ export default function RootLayout() {
         />
       </Stack>
       <StatusBar style="auto" />
+    </>
+  );
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <UserProvider>
+        <AppContent />
+      </UserProvider>
     </ThemeProvider>
   );
 }

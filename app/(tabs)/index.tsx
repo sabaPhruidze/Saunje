@@ -28,7 +28,7 @@ export default function HomeScreen() {
   const { user } = useAuth();
 
   const [spots, setSpots] = useState<Spot[]>([]);
-  const [loading, setLoading] = useState<boolean>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fectchSpots = async () => {
     setLoading(true);
@@ -83,6 +83,11 @@ export default function HomeScreen() {
         style={Object.is(theme, "light") ? styles.titleLight : styles.titleDark}
       >
         საუნჯეები
+      </Text>
+      <Text
+        style={Object.is(theme, "light") ? styles.textLight : styles.textDark}
+      >
+        შენ დალოგინდი როგორც: {user?.email}
       </Text>
       <FlatList
         data={spots}

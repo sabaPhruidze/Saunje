@@ -1,7 +1,6 @@
 // app/_layout.tsx
 import ThemeProvider from "@/context/ThemeContext";
 import { UserProvider, useAuth } from "@/context/UserContext";
-import { useColorScheme } from "@/hooks/use-color-scheme";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -10,9 +9,8 @@ import "react-native-reanimated";
 export const unstable_settings = { anchor: "(tabs)" };
 
 function AppContent() {
-  const { user, loading } = useAuth(); // ✅ now inside the provider
+  const { user, loading } = useAuth();
   const router = useRouter();
-  const colorScheme = useColorScheme();
 
   useEffect(() => {
     if (loading) return;

@@ -4,8 +4,7 @@ import { auth } from "@/firebaseConfing";
 import { signOut } from "firebase/auth";
 import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 export default function HomeScreen() {
-  const theme = useTheme();
-  const isLight = Object.is(theme, "light");
+  const { theme } = useTheme();
 
   const handleLogout = async () => {
     try {
@@ -16,12 +15,20 @@ export default function HomeScreen() {
     }
   };
   return (
-    <View style={isLight ? styles.containerLight : styles.containerDark}>
+    <View
+      style={
+        Object.is(theme, "light") ? styles.containerLight : styles.containerDark
+      }
+    >
       <ThemeToggle />
-      <Text style={isLight ? styles.titleLight : styles.titleDark}>
+      <Text
+        style={Object.is(theme, "light") ? styles.titleLight : styles.titleDark}
+      >
         კეთილი იყოს შენი მობრძანება
       </Text>
-      <Text style={isLight ? styles.textLight : styles.textDark}>
+      <Text
+        style={Object.is(theme, "light") ? styles.textLight : styles.textDark}
+      >
         შენ დალოგინდი როგორც :
       </Text>
       <Pressable onPress={handleLogout} style={styles.logoutButton}>
@@ -49,14 +56,16 @@ const styles = StyleSheet.create({
   titleLight: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#ffffff",
+    color: "#333",
     marginBottom: 10,
+    textAlign: "center",
   },
   titleDark: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#333",
+    color: "#ffffff",
     marginBottom: 10,
+    textAlign: "center",
   },
   textLight: {
     fontSize: 16,

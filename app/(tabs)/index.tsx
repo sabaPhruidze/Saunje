@@ -1,11 +1,13 @@
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
+import { useAuth } from "@/context/UserContext";
 import { auth } from "@/firebaseConfing";
 import { signOut } from "firebase/auth";
-import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function HomeScreen() {
   const { theme } = useTheme();
-
+  const { user } = useAuth();
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -15,7 +17,7 @@ export default function HomeScreen() {
     }
   };
   return (
-    <View
+    <SafeAreaView
       style={
         Object.is(theme, "light") ? styles.containerLight : styles.containerDark
       }
@@ -29,12 +31,12 @@ export default function HomeScreen() {
       <Text
         style={Object.is(theme, "light") ? styles.textLight : styles.textDark}
       >
-        შენ დალოგინდი როგორც :
+        შენ დალოგინდი როგორც : {user?.email}
       </Text>
       <Pressable onPress={handleLogout} style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>გასვლა</Text>
       </Pressable>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -71,11 +73,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#333",
     marginBottom: 30,
+    textAlign: "center",
   },
   textDark: {
     fontSize: 16,
     color: "#ffffff",
     marginBottom: 30,
+    textAlign: "center",
   },
   logoutButton: {
     backgroundColor: "#D2691E",

@@ -2,6 +2,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfing";
+import { useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -26,6 +27,7 @@ interface Spot {
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { user } = useAuth();
+  const router = useRouter();
 
   const [spots, setSpots] = useState<Spot[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -121,6 +123,16 @@ export default function HomeScreen() {
             </Text>
           </View>
         )}
+        ListFooterComponent={
+          <View style={styles.footerContainer}>
+            <Pressable
+              style={styles.addButton}
+              onPress={() => router.push("/create")}
+            >
+              <Text style={styles.addButtonText}>ახალი საუნჯის დამატება</Text>
+            </Pressable>
+          </View>
+        }
       />
       <Pressable onPress={handleLogout} style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>გასვლა</Text>
@@ -221,5 +233,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#CCC",
     marginTop: 4,
+  },
+  footerContainer: {
+    padding: 16,
+  },
+  addButton: {
+    backgroundColor: "#4C9A2A",
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
+    alignItems: "center",
+    marginBottom: 16,
+  },
+  addButtonText: {
+    color: "#ffffff",
+    fontSize: 16,
+    fontWeight: "600",
   },
 });

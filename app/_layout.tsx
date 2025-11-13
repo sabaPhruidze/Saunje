@@ -29,6 +29,13 @@ function AppContent() {
           name="register"
           options={{ title: "register", headerShown: false }}
         />
+        <Stack.Screen
+          name="create"
+          options={{
+            headerShown: false,
+            presentation: "modal",
+          }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </>

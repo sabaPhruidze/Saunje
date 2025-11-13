@@ -131,12 +131,12 @@ export default function HomeScreen() {
             >
               <Text style={styles.addButtonText}>ახალი საუნჯის დამატება</Text>
             </Pressable>
+            <Pressable onPress={handleLogout} style={styles.logoutButton}>
+              <Text style={styles.logoutButtonText}>გასვლა</Text>
+            </Pressable>
           </View>
         }
       />
-      <Pressable onPress={handleLogout} style={styles.logoutButton}>
-        <Text style={styles.logoutButtonText}>გასვლა</Text>
-      </Pressable>
     </SafeAreaView>
   );
 }
@@ -192,6 +192,7 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "center",
   },
   spotCardLight: {
     backgroundColor: "#ffffff",

@@ -1,3 +1,4 @@
+import FormInput from "@/components/auth/FormInput";
 import { useTheme } from "@/context/ThemeContext";
 import React, { useState } from "react";
 import { Alert, Image, Pressable, StyleSheet, Text } from "react-native";
@@ -8,6 +9,9 @@ import * as ImagePicker from "expo-image-picker";
 export default function CreateSpotScreen() {
   const { theme } = useTheme();
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -26,6 +30,16 @@ export default function CreateSpotScreen() {
       setImageUri(result.assets[0].uri);
     }
   };
+
+  const handleSubmit = async () => {
+    if (!imageUri || !title || !description) {
+      Alert.alert("შეცდომა", "შეავსეთ ყველა ველი და აირჩიე სურათი");
+      return;
+    }
+    setLoading(true);
+    console.log("Submitting:", { imageUri, title, description });
+    setLoading(false);
+  };
   return (
     <SafeAreaView
       style={
@@ -42,7 +56,27 @@ export default function CreateSpotScreen() {
           {imageUri ? "სურათის შეცვლა" : "სურათის არჩევა"}
         </Text>
       </Pressable>
-      <Image source={{ uri: imageUri }} style={styles.previewImage} />
+      {imageUri && (
+        <Image source={{ uri: imageUri }} style={styles.previewImage} />
+      )}
+      <FormInput placeholder="სათაური" value={title} onChangeText={setTitle} />
+      <FormInput
+        placeholder="აღწერა"
+        numberOfLines={4} //საწყისი სიმაღლე რამხელა იყოს
+        value={description}
+        multiline //რამდენიმე ხაზიანი რომ იყოს
+        onChangeText={setDescription}
+        style={{ height: 120, textAlignVertical: "top" }}
+      />
+      <Pressable
+        style={[styles.submitButton, loading && styles.submitButtonDisabled]}
+        onPress={handleSubmit}
+        disabled={loading}
+      >
+        <Text style={styles.submitButtonText}>
+          {loading ? "იტვირთება" : "საუნჯე დაემატა"}
+        </Text>
+      </Pressable>
     </SafeAreaView>
   );
 }
@@ -92,5 +126,20 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 20,
     backgroundColor: "#E0E0E0",
+  },
+  submitButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+  submitButtonDisabled: {
+    backgroundColor: "#A5C9A5",
+  },
+  submitButton: {
+    backgroundColor: "#4C9A2A",
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 20,
   },
 });

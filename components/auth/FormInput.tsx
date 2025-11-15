@@ -4,11 +4,12 @@ import { StyleSheet, TextInput, TextInputProps } from "react-native";
 
 type FormInputProps = TextInputProps; //სტანდარტული prop
 
-const FormInput = (props: FormInputProps) => {
+const FormInput = ({ style, ...props }: FormInputProps) => {
   const { theme } = useTheme();
+  const inputStyle = theme === "light" ? styles.inputLight : styles.inputDark;
   return (
     <TextInput
-      style={Object.is(theme, "light") ? styles.inputLight : styles.inputDark}
+      style={[inputStyle, style]}
       placeholderTextColor={theme === "light" ? "#AAA" : "#777"} //ფერის დამატება
       {...props} // გადავცეთ ყველა გარედან მიღებული prop-ი (value, onChangeText...)
     />

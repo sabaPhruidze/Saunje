@@ -1,8 +1,14 @@
 import FormInput from "@/components/auth/FormInput";
 import { useTheme } from "@/context/ThemeContext";
 import React, { useState } from "react";
-import { Alert, Image, Pressable, StyleSheet, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import {
+  Alert,
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+} from "react-native";
 
 import * as ImagePicker from "expo-image-picker";
 
@@ -38,10 +44,11 @@ export default function CreateSpotScreen() {
     }
     setLoading(true);
     console.log("Submitting:", { imageUri, title, description });
+
     setLoading(false);
   };
   return (
-    <SafeAreaView
+    <ScrollView
       style={
         Object.is(theme, "light") ? styles.containerLight : styles.containerDark
       }
@@ -66,7 +73,7 @@ export default function CreateSpotScreen() {
         value={description}
         multiline //რამდენიმე ხაზიანი რომ იყოს
         onChangeText={setDescription}
-        style={{ height: 120, textAlignVertical: "top" }}
+        style={Object.is(theme, "light") ? styles.inputDark : styles.inputLight}
       />
       <Pressable
         style={[styles.submitButton, loading && styles.submitButtonDisabled]}
@@ -77,7 +84,7 @@ export default function CreateSpotScreen() {
           {loading ? "იტვირთება" : "საუნჯე დაემატა"}
         </Text>
       </Pressable>
-    </SafeAreaView>
+    </ScrollView>
   );
 }
 
@@ -141,5 +148,29 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: "center",
     marginTop: 20,
+  },
+  inputDark: {
+    height: 150,
+    backgroundColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 12,
+    borderColor: "#DDD",
+    fontSize: 16,
+    color: "#333",
+    textAlignVertical: "top",
+  },
+  inputLight: {
+    height: 150,
+    backgroundColor: "#ddd",
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: "#444",
+    paddingHorizontal: 15,
+    marginBottom: 12,
+    fontSize: 16,
+    color: "#333",
+    textAlignVertical: "top",
   },
 });

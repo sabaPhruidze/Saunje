@@ -1,5 +1,8 @@
 import FormInput from "@/components/auth/FormInput";
 import { useTheme } from "@/context/ThemeContext";
+import * as ImagePicker from "expo-image-picker";
+import * as Location from "expo-location";
+import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -17,8 +20,10 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import * as ImagePicker from "expo-image-picker";
-import * as Location from "expo-location";
+import { useAuth } from "@/context/UserContext";
+import { db, storage } from "@/firebaseConfing";
+import { addDoc, collection } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 interface SpotLocation {
   latitude: number;
@@ -26,6 +31,7 @@ interface SpotLocation {
 }
 
 export default function CreateSpotScreen() {
+  const router = useRouter();
   const { theme } = useTheme();
   const [imageUri, setImageUri] = useState<string | undefined>(undefined);
   const [title, setTitle] = useState<string>("");
@@ -33,6 +39,7 @@ export default function CreateSpotScreen() {
   const [loading, setLoading] = useState<boolean>(false);
   const [locationLoading, setLocationLoading] = useState<boolean>(false);
   const [location, setLocation] = useState<SpotLocation | null>(null);
+  const { user } = useAuth();
 
   const pickImage = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -74,13 +81,55 @@ export default function CreateSpotScreen() {
   };
 
   const handleSubmit = async () => {
-    if (!imageUri || !title || !description || !location) {
-      Alert.alert("შეცდომა", "შეავსეთ ყველა ველი და აირჩიე სურათი");
+    // 3a. შემოწმება (დავამატოთ user-ის შემოწმება)
+    if (!imageUri || !title || !description || !location || !user) {
+      Alert.alert("შეცდომა", "გთხოვთ, შეავსოთ ყველა ველი.");
       return;
     }
     setLoading(true);
-    console.log("Submitting:", { imageUri, title, description, location });
-    setLoading(false);
+
+    try {
+      // === ნაბიჯი 1: სურათის ატვირთვა Storage-ში ===
+
+      // 3b. გადავაქციოთ 'file:///...uri' -> 'Blob' (ფაილად)
+      const response = await fetch(imageUri);
+      const blob = await response.blob();
+
+      // 3c. შევქმნათ უნიკალური ფაილის სახელი (მაგ. user.uid-ით და დროით)
+      const filename = `${user.uid}-${Date.now()}.jpg`;
+      // 3d. შევქმნათ "ადგილი" Storage-ში 'saunje_images/' ფოლდერში
+      const storageRef = ref(storage, `saunje_images/${filename}`);
+
+      // 3e. ავტვირთოთ ფაილი
+      await uploadBytes(storageRef, blob);
+
+      // 3f. ავიღოთ საჯარო Download URL-ი
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log("File available at:", downloadURL);
+
+      // === ნაბიჯი 2: ობიექტის შექმნა Firestore-სთვის ===
+      const spotDocument = {
+        title: title,
+        description: description,
+        location: location,
+        imageUrl: downloadURL, // ვიყენებთ ახალ URL-ს
+        userId: user.uid, // "პატრონის" ID
+        createdAt: new Date(), // დამატების დრო
+      };
+
+      // === ნაბიჯი 3: დოკუმენტის ჩაწერა Firestore-ში ===
+      const docRef = await addDoc(collection(db, "Saunje"), spotDocument);
+      console.log("Document written with ID:", docRef.id);
+
+      // === ნაბიჯი 4: წარმატება ===
+      setLoading(false);
+      Alert.alert("წარმატება", "ახალი საუნჯე წარმატებით დაემატა!");
+      router.back(); // დავხუროთ მოდალი და დავბრუნდეთ მთავარ ეკრანზე
+    } catch (error: any) {
+      setLoading(false);
+      console.error("Error adding document: ", error);
+      Alert.alert("ატვირთვის შეცდომა", error.message);
+    }
   };
   return (
     <SafeAreaView

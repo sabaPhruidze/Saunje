@@ -138,6 +138,7 @@ export default function CreateSpotScreen() {
       }
       edges={["top", "right", "left", "bottom"]}
     >
+      {/* well I need to rebuild first the firebase and correct it  */}
       <TouchableWithoutFeedback
         onPress={() => Keyboard.dismiss}
         accessible={false}

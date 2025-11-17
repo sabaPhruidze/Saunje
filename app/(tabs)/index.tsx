@@ -2,10 +2,10 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfing";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
@@ -51,9 +51,13 @@ export default function HomeScreen() {
       Alert.alert(e.message);
     }
   };
-  useEffect(() => {
-    fectchSpots();
-  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fectchSpots();
+    }, [])
+  );
+
   const handleLogout = async () => {
     try {
       await signOut(auth);

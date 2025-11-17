@@ -10,7 +10,6 @@ const firebaseConfig = {
   storageBucket: process.env.EXPO_PUBLIC_STORAGE_BUCKET,
   messagingSenderId: process.env.EXPO_PUBLIC_MESSAGING_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_APP_ID,
-  measurementId: process.env.EXPO_PUBLIC_MEASUREMENT_ID,
 };
 if (!firebaseConfig.apiKey) {
   throw new Error("Firebase API_ს გასაღები აკლია.  შეამოწმე .env ფაილი");

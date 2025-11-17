@@ -2,6 +2,7 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfing";
+import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import { collection, getDocs } from "firebase/firestore";
@@ -20,11 +21,17 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+type SpotLocation = {
+  latitude: number;
+  longitude: number;
+};
+
 interface Spot {
   id: string;
   title: string;
   description: string;
   imageUrl: string;
+  location: SpotLocation;
 }
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.8;
@@ -136,6 +143,25 @@ export default function HomeScreen() {
               >
                 {item.description}
               </Text>
+              {item.location && (
+                <View style={styles.locationContainer}>
+                  <Ionicons
+                    name="location"
+                    size={14}
+                    color={Object.is(theme, "light") ? "#667" : "#CCC"}
+                  />
+                  <Text
+                    style={
+                      Object.is(theme, "light")
+                        ? styles.locationTextLight
+                        : styles.locationTextDark
+                    }
+                  >
+                    {item.location.latitude.toFixed(4)},{" "}
+                    {item.location.longitude.toFixed(4)}
+                  </Text>
+                </View>
+              )}
             </View>
           )}
         />
@@ -270,5 +296,21 @@ const styles = StyleSheet.create({
   },
   spotCard: {
     width: CARD_WIDTH,
+  },
+  locationContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+    opacity: 0.7, // მკრთალი ცოტათი
+  },
+  locationTextLight: {
+    fontSize: 12,
+    color: "#334",
+    marginLeft: 4,
+  },
+  locationTextDark: {
+    fontSize: 12,
+    color: "#CCC",
+    marginLeft: 4,
   },
 });

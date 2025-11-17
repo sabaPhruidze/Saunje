@@ -26,12 +26,12 @@ interface Spot {
   description: string;
   imageUrl: string;
 }
+const { width } = Dimensions.get("window");
+const CARD_WIDTH = width * 0.8;
 export default function HomeScreen() {
   const { theme } = useTheme();
   const { user } = useAuth();
   const router = useRouter();
-  const { width } = Dimensions.get("window");
-  const CARD_WIDTH = width * 0.8;
 
   const [spots, setSpots] = useState<Spot[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -114,11 +114,12 @@ export default function HomeScreen() {
             >
               <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
               <Text
-                style={
+                style={[
                   Object.is(theme, "light")
                     ? styles.spotTitleLight
-                    : styles.spotTitleDark
-                }
+                    : styles.spotTitleDark,
+                  styles.spotCard,
+                ]}
               >
                 {item.title}
               </Text>
@@ -207,7 +208,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 8,
     padding: 16,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     marginBottom: 16,
     elevation: 3, // ჩრდილი Android-სთვის
   },
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#252525",
     borderRadius: 8,
     padding: 16,
-    marginHorizontal: 16,
+    marginHorizontal: 8,
     marginBottom: 16,
   },
   spotImage: {
@@ -262,5 +263,8 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: 16,
+  },
+  spotCard: {
+    width: CARD_WIDTH,
   },
 });

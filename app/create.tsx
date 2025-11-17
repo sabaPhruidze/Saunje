@@ -1,4 +1,5 @@
 import FormInput from "@/components/auth/FormInput";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import * as ImagePicker from "expo-image-picker";
 import * as Location from "expo-location";
@@ -138,6 +139,7 @@ export default function CreateSpotScreen() {
       }
       edges={["top", "right", "left", "bottom"]}
     >
+      <ThemeToggle />
       {/* well I need to rebuild first the firebase and correct it  */}
       <TouchableWithoutFeedback
         onPress={() => Keyboard.dismiss}

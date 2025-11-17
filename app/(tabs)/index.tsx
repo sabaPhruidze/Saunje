@@ -9,9 +9,11 @@ import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
+  Dimensions,
   FlatList,
   Image,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -28,6 +30,8 @@ export default function HomeScreen() {
   const { theme } = useTheme();
   const { user } = useAuth();
   const router = useRouter();
+  const { width } = Dimensions.get("window");
+  const CARD_WIDTH = width * 0.8;
 
   const [spots, setSpots] = useState<Spot[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -81,62 +85,67 @@ export default function HomeScreen() {
       }
     >
       <ThemeToggle />
-      <Text
-        style={Object.is(theme, "light") ? styles.titleLight : styles.titleDark}
-      >
-        საუნჯეები
-      </Text>
-      <Text
-        style={Object.is(theme, "light") ? styles.textLight : styles.textDark}
-      >
-        შენ დალოგინდი როგორც: {user?.email}
-      </Text>
-      <FlatList
-        data={spots}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View
-            style={
-              Object.is(theme, "light")
-                ? styles.spotCardLight
-                : styles.spotCardDark
-            }
+      <ScrollView>
+        <Text
+          style={
+            Object.is(theme, "light") ? styles.titleLight : styles.titleDark
+          }
+        >
+          საუნჯეები
+        </Text>
+        <Text
+          style={Object.is(theme, "light") ? styles.textLight : styles.textDark}
+        >
+          შენ დალოგინდი როგორც: {user?.email}
+        </Text>
+        <FlatList
+          data={spots}
+          keyExtractor={(item) => item.id}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false} //scroll bar რომ არ გამოჩნდეს
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item }) => (
+            <View
+              style={
+                Object.is(theme, "light")
+                  ? styles.spotCardLight
+                  : styles.spotCardDark
+              }
+            >
+              <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
+              <Text
+                style={
+                  Object.is(theme, "light")
+                    ? styles.spotTitleLight
+                    : styles.spotTitleDark
+                }
+              >
+                {item.title}
+              </Text>
+              <Text
+                style={
+                  Object.is(theme, "light")
+                    ? styles.spotDescriptionLight
+                    : styles.spotDescriptionDark
+                }
+              >
+                {item.description}
+              </Text>
+            </View>
+          )}
+        />
+        <View style={styles.footerContainer}>
+          <Pressable
+            style={styles.addButton}
+            onPress={() => router.push("/create")}
           >
-            <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
-            <Text
-              style={
-                Object.is(theme, "light")
-                  ? styles.spotTitleLight
-                  : styles.spotTitleDark
-              }
-            >
-              {item.title}
-            </Text>
-            <Text
-              style={
-                Object.is(theme, "light")
-                  ? styles.spotDescriptionLight
-                  : styles.spotDescriptionDark
-              }
-            >
-              {item.description}
-            </Text>
-          </View>
-        )}
-        ListFooterComponent={
-          <View style={styles.footerContainer}>
-            <Pressable
-              style={styles.addButton}
-              onPress={() => router.push("/create")}
-            >
-              <Text style={styles.addButtonText}>ახალი საუნჯის დამატება</Text>
-            </Pressable>
-            <Pressable onPress={handleLogout} style={styles.logoutButton}>
-              <Text style={styles.logoutButtonText}>გასვლა</Text>
-            </Pressable>
-          </View>
-        }
-      />
+            <Text style={styles.addButtonText}>ახალი საუნჯის დამატება</Text>
+          </Pressable>
+          <Pressable onPress={handleLogout} style={styles.logoutButton}>
+            <Text style={styles.logoutButtonText}>გასვლა</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -250,5 +259,8 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 16,
     fontWeight: "600",
+  },
+  listContent: {
+    paddingHorizontal: 16,
   },
 });

@@ -43,9 +43,22 @@ export default function CreateSpotScreen() {
   const { user } = useAuth();
 
   const pickImage = async () => {
-    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("ნებარვა საჭიროა", "გთხოვთ დაუშვათ წვდომა ფოტო გალერეაზე");
+    const { status: currentStatus } =
+      await ImagePicker.getMediaLibraryPermissionsAsync();
+
+    let finalStatus = currentStatus;
+    if (currentStatus !== "granted") {
+      const { status: requestStatus } =
+        await ImagePicker.requestMediaLibraryPermissionsAsync();
+      finalStatus = requestStatus;
+      return;
+    }
+    if (finalStatus !== "granted") {
+      Alert.alert(
+        "ნებართვა საჭიროა",
+        "გთხოვთ, დაუშვათ წვდომა ფოტო გალერეაზე აპლიკაციის სეთინგებიდან, რათა შეძლოთ სურათის ატვირთვა.",
+        [{ text: "OK" }]
+      );
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({

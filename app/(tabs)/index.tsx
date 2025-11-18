@@ -62,8 +62,10 @@ export default function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      fectchSpots();
-    }, [])
+      if (user) {
+        fectchSpots();
+      }
+    }, [user])
   );
 
   const handleLogout = async () => {

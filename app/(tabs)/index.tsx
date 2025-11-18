@@ -5,7 +5,7 @@ import { auth, db } from "@/firebaseConfing";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
@@ -59,7 +59,29 @@ export default function HomeScreen() {
       Alert.alert(e.message);
     }
   };
-
+  const handleDelete = (spotId: string) => {
+    Alert.alert("წაშლა", "ნამდვილად გსურთ ამ საუნჯის წაშლა?", [
+      { text: "გაუქმება", style: "cancel" },
+      {
+        text: "წაშლა",
+        style: "destructive",
+        onPress: async () => {
+          try {
+            setLoading(true);
+            await deleteDoc(doc(db, "Saunje", spotId));
+            setSpots((prevSpots) =>
+              prevSpots.filter((spot) => spot.id !== spotId)
+            );
+            setLoading(false);
+            Alert.alert("წარმატება", "საუნჯე წაიშალა");
+          } catch (e: any) {
+            setLoading(false);
+            Alert.alert("შეცდომა", e.message);
+          }
+        },
+      },
+    ]);
+  };
   useFocusEffect(
     useCallback(() => {
       if (user) {
@@ -127,6 +149,12 @@ export default function HomeScreen() {
               }
             >
               <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
+              <Pressable
+                style={styles.deleteButton}
+                onPress={() => handleDelete(item.id)}
+              >
+                <Ionicons name="trash" size={20} color="white" />
+              </Pressable>
               <Text
                 style={[
                   Object.is(theme, "light")
@@ -315,5 +343,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: "#CCC",
     marginLeft: 4,
+  },
+  deleteButton: {
+    position: "absolute",
+    top: 24,
+    right: 24,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    padding: 8,
+    borderRadius: 20,
+    zIndex: 1,
   },
 });

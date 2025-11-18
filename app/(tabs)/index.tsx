@@ -44,6 +44,7 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const fectchSpots = async () => {
+    if (!user) return;
     setLoading(true);
     try {
       const saunjeCollection = collection(db, "Saunje"); // "მომზადე 'Saunje' კოლექცია"

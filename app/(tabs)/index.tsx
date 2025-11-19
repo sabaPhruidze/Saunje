@@ -1,3 +1,5 @@
+import HomeFooter from "@/components/home/HomeFooter";
+import HomeHeader from "@/components/home/HomeHeader";
 import SpotCard, { Spot } from "@/components/spots/SpotCard";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
@@ -11,10 +13,8 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
-  Pressable,
   ScrollView,
   StyleSheet,
-  Text,
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -107,18 +107,7 @@ export default function HomeScreen() {
     >
       <ThemeToggle />
       <ScrollView>
-        <Text
-          style={
-            Object.is(theme, "light") ? styles.titleLight : styles.titleDark
-          }
-        >
-          საუნჯეები
-        </Text>
-        <Text
-          style={Object.is(theme, "light") ? styles.textLight : styles.textDark}
-        >
-          შენ დალოგინდი როგორც: {user?.email}
-        </Text>
+        <HomeHeader isLight={isLight} userEmail={user?.email} />
         <FlatList
           data={spots}
           keyExtractor={(item) => item.id}
@@ -133,17 +122,10 @@ export default function HomeScreen() {
             />
           )}
         />
-        <View style={styles.footerContainer}>
-          <Pressable
-            style={styles.addButton}
-            onPress={() => router.push("/create")}
-          >
-            <Text style={styles.addButtonText}>ახალი საუნჯის დამატება</Text>
-          </Pressable>
-          <Pressable onPress={handleLogout} style={styles.logoutButton}>
-            <Text style={styles.logoutButtonText}>გასვლა</Text>
-          </Pressable>
-        </View>
+        <HomeFooter
+          onAddPress={() => router.push("/create")}
+          onLogoutPress={handleLogout}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -163,60 +145,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#121212",
     position: "relative",
-  },
-  titleLight: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#333",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  titleDark: {
-    fontSize: 24,
-    fontWeight: "600",
-    color: "#ffffff",
-    marginBottom: 10,
-    textAlign: "center",
-  },
-  textLight: {
-    fontSize: 16,
-    color: "#333",
-    marginBottom: 30,
-    textAlign: "center",
-  },
-  textDark: {
-    fontSize: 16,
-    color: "#ffffff",
-    marginBottom: 30,
-    textAlign: "center",
-  },
-  logoutButton: {
-    backgroundColor: "#D2691E",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 8,
-  },
-  logoutButtonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  footerContainer: {
-    padding: 16,
-  },
-  addButton: {
-    backgroundColor: "#4C9A2A",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 8,
-    alignItems: "center",
-    marginBottom: 16,
-  },
-  addButtonText: {
-    color: "#ffffff",
-    fontSize: 16,
-    fontWeight: "600",
   },
   listContent: {
     paddingHorizontal: 16,

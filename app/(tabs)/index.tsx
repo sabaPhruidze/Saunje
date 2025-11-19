@@ -1,8 +1,8 @@
+import SpotCard, { Spot } from "@/components/spots/SpotCard";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/UserContext";
 import { auth, db } from "@/firebaseConfing";
-import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect, useRouter } from "expo-router";
 import { signOut } from "firebase/auth";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
@@ -10,9 +10,7 @@ import { useCallback, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Dimensions,
   FlatList,
-  Image,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -21,22 +19,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-type SpotLocation = {
-  latitude: number;
-  longitude: number;
-};
-
-interface Spot {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  location: SpotLocation;
-}
-const { width } = Dimensions.get("window");
-const CARD_WIDTH = width * 0.8;
 export default function HomeScreen() {
   const { theme } = useTheme();
+  const isLight = theme === "light";
   const { user } = useAuth();
   const router = useRouter();
 
@@ -141,59 +126,11 @@ export default function HomeScreen() {
           showsHorizontalScrollIndicator={false} //scroll bar რომ არ გამოჩნდეს
           contentContainerStyle={styles.listContent}
           renderItem={({ item }) => (
-            <View
-              style={
-                Object.is(theme, "light")
-                  ? styles.spotCardLight
-                  : styles.spotCardDark
-              }
-            >
-              <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
-              <Pressable
-                style={styles.deleteButton}
-                onPress={() => handleDelete(item.id)}
-              >
-                <Ionicons name="trash" size={20} color="white" />
-              </Pressable>
-              <Text
-                style={[
-                  Object.is(theme, "light")
-                    ? styles.spotTitleLight
-                    : styles.spotTitleDark,
-                  styles.spotCard,
-                ]}
-              >
-                {item.title}
-              </Text>
-              <Text
-                style={
-                  Object.is(theme, "light")
-                    ? styles.spotDescriptionLight
-                    : styles.spotDescriptionDark
-                }
-              >
-                {item.description}
-              </Text>
-              {item.location && (
-                <View style={styles.locationContainer}>
-                  <Ionicons
-                    name="location"
-                    size={14}
-                    color={Object.is(theme, "light") ? "#667" : "#CCC"}
-                  />
-                  <Text
-                    style={
-                      Object.is(theme, "light")
-                        ? styles.locationTextLight
-                        : styles.locationTextDark
-                    }
-                  >
-                    {item.location.latitude.toFixed(4)},{" "}
-                    {item.location.longitude.toFixed(4)}
-                  </Text>
-                </View>
-              )}
-            </View>
+            <SpotCard
+              item={item}
+              isLight={isLight}
+              handleDelete={handleDelete}
+            />
           )}
         />
         <View style={styles.footerContainer}>
@@ -265,47 +202,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  spotCardLight: {
-    backgroundColor: "#ffffff",
-    borderRadius: 8,
-    padding: 16,
-    marginHorizontal: 8,
-    marginBottom: 16,
-    elevation: 3, // ჩრდილი Android-სთვის
-  },
-  spotCardDark: {
-    backgroundColor: "#252525",
-    borderRadius: 8,
-    padding: 16,
-    marginHorizontal: 8,
-    marginBottom: 16,
-  },
-  spotImage: {
-    width: "100%",
-    height: 200,
-    borderRadius: 8,
-    marginBottom: 12,
-  },
-  spotTitleLight: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  spotTitleDark: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: "#ffffff",
-  },
-  spotDescriptionLight: {
-    fontSize: 14,
-    color: "#677",
-    marginTop: 4,
-  },
-  spotDescriptionDark: {
-    fontSize: 14,
-    color: "#CCC",
-    marginTop: 4,
-  },
   footerContainer: {
     padding: 16,
   },
@@ -324,33 +220,5 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: 16,
-  },
-  spotCard: {
-    width: CARD_WIDTH,
-  },
-  locationContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 10,
-    opacity: 0.7, // მკრთალი ცოტათი
-  },
-  locationTextLight: {
-    fontSize: 12,
-    color: "#334",
-    marginLeft: 4,
-  },
-  locationTextDark: {
-    fontSize: 12,
-    color: "#CCC",
-    marginLeft: 4,
-  },
-  deleteButton: {
-    position: "absolute",
-    top: 24,
-    right: 24,
-    backgroundColor: "rgba(0,0,0,0.6)",
-    padding: 8,
-    borderRadius: 20,
-    zIndex: 1,
   },
 });

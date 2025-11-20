@@ -1,3 +1,4 @@
+import EmptyState from "@/components/home/EmptyState";
 import HomeFooter from "@/components/home/HomeFooter";
 import HomeHeader from "@/components/home/HomeHeader";
 import SpotCard, { Spot } from "@/components/spots/SpotCard";
@@ -122,6 +123,7 @@ export default function HomeScreen() {
               curretUserId={user?.uid}
             />
           )}
+          ListEmptyComponent={<EmptyState isLight={isLight} />}
         />
         <HomeFooter
           onAddPress={() => router.push("/create")}

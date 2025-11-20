@@ -25,12 +25,19 @@ type SpotCardProps = {
   item: Spot;
   isLight: boolean;
   handleDelete: (spotId: string) => void;
-  currnetUserId?: string;
+  curretUserId?: string;
 };
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.8;
 
-const SpotCard = ({ item, isLight, handleDelete }: SpotCardProps) => {
+const SpotCard = ({
+  item,
+  isLight,
+  handleDelete,
+  curretUserId,
+}: SpotCardProps) => {
+  //ვაზუსტებ თუ არის ამით მომხმარებელი მესაკუთრე
+  const isOwner = item.userId === curretUserId;
   return (
     <View
       style={[
@@ -39,12 +46,14 @@ const SpotCard = ({ item, isLight, handleDelete }: SpotCardProps) => {
       ]}
     >
       <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
-      <Pressable
-        style={styles.deleteButton}
-        onPress={() => handleDelete(item.id)}
-      >
-        <Ionicons name="trash" size={20} color="white" />
-      </Pressable>
+      {isOwner && (
+        <Pressable
+          style={styles.deleteButton}
+          onPress={() => handleDelete(item.id)}
+        >
+          <Ionicons name="trash" size={20} color="white" />
+        </Pressable>
+      )}
       <Text
         style={
           isLight ? styles.spotDescriptionLight : styles.spotDescriptionDark

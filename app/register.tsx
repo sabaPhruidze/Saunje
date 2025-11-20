@@ -1,6 +1,6 @@
 import { auth } from "@/firebaseConfing";
 import { useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
@@ -57,7 +57,6 @@ const RegisterScreen = () => {
       style={Object.is(theme, "light") ? styles.safeLight : styles.safeDark}
       edges={["top", "bottom", "left", "right"]}
     >
-      <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
       <TouchableWithoutFeedback
         onPress={() => Keyboard.dismiss}
         accessible={false}

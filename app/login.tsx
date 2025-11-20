@@ -7,7 +7,7 @@ import FormInput from "@/components/auth/FormInput";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import { useRouter } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import {
   Alert,
@@ -53,8 +53,6 @@ const LoginScreen = () => {
       style={Object.is(theme, "light") ? styles.safeLight : styles.safeDark}
       edges={["top", "right", "left", "bottom"]}
     >
-      <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
-
       <TouchableWithoutFeedback
         onPress={() => Keyboard.dismiss}
         accessible={false}

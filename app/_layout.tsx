@@ -1,5 +1,5 @@
 // app/_layout.tsx
-import ThemeProvider from "@/context/ThemeContext";
+import ThemeProvider, { useTheme } from "@/context/ThemeContext";
 import { UserProvider, useAuth } from "@/context/UserContext";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -16,7 +16,7 @@ function AppContent() {
     if (loading) return;
     router.replace(user ? "/(tabs)" : "/login");
   }, [user, loading, router]);
-
+  const { theme } = useTheme();
   return (
     <>
       <Stack>
@@ -37,7 +37,7 @@ function AppContent() {
           }}
         />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
     </>
   );
 }

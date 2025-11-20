@@ -25,6 +25,7 @@ type SpotCardProps = {
   item: Spot;
   isLight: boolean;
   handleDelete: (spotId: string) => void;
+  currnetUserId?: string;
 };
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.8;

@@ -119,6 +119,7 @@ export default function HomeScreen() {
               item={item}
               isLight={isLight}
               handleDelete={handleDelete}
+              curretUserId={user?.uid}
             />
           )}
         />

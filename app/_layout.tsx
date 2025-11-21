@@ -36,6 +36,14 @@ function AppContent() {
             presentation: "modal",
           }}
         />
+        <Stack.Screen
+          name="map"
+          options={{
+            headerShown: false,
+            presentation: "modal", //modalად გაიხსნება
+            animation: "slide_from_bottom", // შეგვიძლია ანიმაციაც შევუცვალოთ
+          }}
+        />
       </Stack>
       <StatusBar style={Object.is(theme, "light") ? "dark" : "light"} />
     </>

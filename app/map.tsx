@@ -12,6 +12,7 @@ function MapScreen() {
         size={40}
         color="rgba(0,0,0,0.6)"
         onPress={() => router.back()}
+        style={styles.closeButton}
       />
     </View>
   );
@@ -36,8 +37,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 40,
     left: 16,
-    backgroundColor: "rgba(0,0,0,0.5)",
-    borderRadius: 20,
     zIndex: 1,
   },
 });

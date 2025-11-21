@@ -22,9 +22,11 @@ export default ThemeToggle;
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 30,
+    top: 40,
     right: 16,
     zIndex: 1,
     padding: 5,
+    backgroundColor: "rgba(0,0,0,0.05)", // ოდნავ ფონი რომ ჰქონდეს
+    borderRadius: 20,
   },
 });

@@ -2,6 +2,7 @@ import EmptyState from "@/components/home/EmptyState";
 import HomeFooter from "@/components/home/HomeFooter";
 import HomeHeader from "@/components/home/HomeHeader";
 import SpotCard, { Spot } from "@/components/spots/SpotCard";
+import MapButton from "@/components/ui/MapButton";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import { useTheme } from "@/context/ThemeContext";
 import { useAuth } from "@/context/UserContext";
@@ -107,6 +108,7 @@ export default function HomeScreen() {
       }
     >
       <ThemeToggle />
+      <MapButton />
       <ScrollView>
         <HomeHeader isLight={isLight} userEmail={user?.email} />
         <FlatList

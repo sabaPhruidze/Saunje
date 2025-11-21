@@ -49,6 +49,7 @@ function MapScreen() {
   }
   return (
     <View style={styles.conatiner}>
+      {/*სტატუს ბარი შავი გავხადე რადგან ვიზუალურად არ შეესაბამებოდა ისე რუკის ფერს და იკარგებოდა */}
       <StatusBar style="dark" />
       <Ionicons
         name="close-circle"
@@ -61,7 +62,7 @@ function MapScreen() {
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
-          latitude: 41.7151, // თბილისის კოორდინატები (ცენტრი)
+          latitude: 41.7151, // თბილისის კოორდინატები
           longitude: 44.8271,
           latitudeDelta: 0.0922, // ზუმი
           longitudeDelta: 0.0421,

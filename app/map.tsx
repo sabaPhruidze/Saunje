@@ -1,9 +1,11 @@
 import { db } from "@/firebaseConfing";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 
 interface SpotLocation {
   latitude: number;
@@ -41,12 +43,13 @@ function MapScreen() {
   }, []);
 
   if (loading) {
-    <View>
+    <View style={styles.loadingContainer}>
       <ActivityIndicator size={40} color="#4C9A2A" />
     </View>;
   }
   return (
     <View style={styles.conatiner}>
+      <StatusBar style="dark" />
       <Ionicons
         name="close-circle"
         size={40}
@@ -54,6 +57,29 @@ function MapScreen() {
         onPress={() => router.back()}
         style={styles.closeButton}
       />
+      <MapView
+        style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={{
+          latitude: 41.7151, // თბილისის კოორდინატები (ცენტრი)
+          longitude: 44.8271,
+          latitudeDelta: 0.0922, // ზუმი
+          longitudeDelta: 0.0421,
+        }}
+        showsUserLocation={true}
+      >
+        {spots.map((spot) => (
+          <Marker
+            key={spot.id}
+            coordinate={{
+              latitude: spot.location.latitude,
+              longitude: spot.location.longitude,
+            }}
+            title={spot.title}
+            description={spot.description}
+          />
+        ))}
+      </MapView>
     </View>
   );
 }

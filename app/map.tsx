@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { collection, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { ActivityIndicator, Alert, StyleSheet, View } from "react-native";
 
 interface SpotLocation {
   latitude: number;
@@ -39,6 +39,12 @@ function MapScreen() {
     };
     fetchSpots();
   }, []);
+
+  if (loading) {
+    <View>
+      <ActivityIndicator size={40} color="#4C9A2A" />
+    </View>;
+  }
   return (
     <View style={styles.conatiner}>
       <Ionicons

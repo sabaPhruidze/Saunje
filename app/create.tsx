@@ -146,6 +146,38 @@ export default function CreateSpotScreen() {
       Alert.alert("ატვირთვის შეცდომა", error.message);
     }
   };
+  const takePhoto = async () => {
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("ნებართვა", "გთხოვთ დაუშვათ წვდომა გალერეაზე");
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.7,
+    });
+    if (!result.canceled) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
+  const showImageOptions = () => {
+    Alert.alert("სურათის არჩევა", "აირჩიეთ წყარო:", [
+      {
+        text: "გალერეა",
+        onPress: pickImage,
+      },
+      {
+        text: "კამერა",
+        onPress: takePhoto,
+      },
+      {
+        text: "გაუქმება",
+        style: "cancel",
+      },
+    ]);
+  };
   return (
     <SafeAreaView
       style={

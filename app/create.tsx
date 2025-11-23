@@ -152,7 +152,7 @@ export default function CreateSpotScreen() {
       Alert.alert("ნებართვა", "გთხოვთ დაუშვათ წვდომა გალერეაზე");
       return;
     }
-    const result = await ImagePicker.launchImageLibraryAsync({
+    const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
       aspect: [4, 3],

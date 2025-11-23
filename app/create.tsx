@@ -213,7 +213,10 @@ export default function CreateSpotScreen() {
               >
                 დაამატე ახალი საუნჯე
               </Text>
-              <Pressable style={styles.imagePickerButton} onPress={pickImage}>
+              <Pressable
+                style={styles.imagePickerButton}
+                onPress={showImageOptions}
+              >
                 <Text style={styles.imagePickerButtonText}>
                   {imageUri ? "სურათის შეცვლა" : "სურათის არჩევა"}
                 </Text>

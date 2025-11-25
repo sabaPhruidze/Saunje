@@ -124,7 +124,12 @@ export default function HomeScreen() {
               isLight={isLight}
               handleDelete={handleDelete}
               curretUserId={user?.uid}
-              onPress={() => router.push(`/spot/${item.id}`)}
+              onPress={() =>
+                router.push({
+                  pathname: "/spot/[id]",
+                  params: { id: item.id },
+                })
+              }
             />
           )}
           ListEmptyComponent={<EmptyState isLight={isLight} />}

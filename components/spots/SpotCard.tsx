@@ -39,7 +39,7 @@ const SpotCard = ({
   //ვაზუსტებ თუ არის ამით მომხმარებელი მესაკუთრე
   const isOwner = item.userId === curretUserId;
   return (
-    <View
+    <Pressable
       style={[
         isLight ? styles.spotCardLight : styles.spotCardDark,
         styles.spotCard,
@@ -55,9 +55,16 @@ const SpotCard = ({
         </Pressable>
       )}
       <Text
+        style={isLight ? styles.spotTitleLight : styles.spotTitleDark}
+        numberOfLines={1}
+      >
+        {item.title}
+      </Text>
+      <Text
         style={
           isLight ? styles.spotDescriptionLight : styles.spotDescriptionDark
         }
+        numberOfLines={2}
       >
         {item.description}
       </Text>
@@ -76,7 +83,7 @@ const SpotCard = ({
           </Text>
         </View>
       )}
-    </View>
+    </Pressable>
   );
 };
 

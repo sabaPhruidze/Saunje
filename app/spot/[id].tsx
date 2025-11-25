@@ -19,7 +19,11 @@ const SpotDetailScreen = () => {
   return (
     <SafeAreaView>
       <Stack.Screen
-        options={{ headerTitle: spot?.title, headerBackTitle: "უკან" }}
+        options={{
+          headerTitle: spot?.title,
+          headerBackTitle: "უკან",
+          headerShown: false,
+        }}
       />
       <ScrollView>
         <Image source={{ uri: spot?.imageUrl }} />

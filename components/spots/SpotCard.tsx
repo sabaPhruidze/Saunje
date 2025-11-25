@@ -26,6 +26,7 @@ type SpotCardProps = {
   isLight: boolean;
   handleDelete: (spotId: string) => void;
   curretUserId?: string;
+  onPress: () => void;
 };
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = width * 0.8;
@@ -35,6 +36,7 @@ const SpotCard = ({
   isLight,
   handleDelete,
   curretUserId,
+  onPress,
 }: SpotCardProps) => {
   //ვაზუსტებ თუ არის ამით მომხმარებელი მესაკუთრე
   const isOwner = item.userId === curretUserId;
@@ -44,6 +46,7 @@ const SpotCard = ({
         isLight ? styles.spotCardLight : styles.spotCardDark,
         styles.spotCard,
       ]}
+      onPress={onPress}
     >
       <Image source={{ uri: item.imageUrl }} style={styles.spotImage} />
       {isOwner && (
@@ -65,6 +68,7 @@ const SpotCard = ({
           isLight ? styles.spotDescriptionLight : styles.spotDescriptionDark
         }
         numberOfLines={2}
+        ellipsizeMode="tail"
       >
         {item.description}
       </Text>

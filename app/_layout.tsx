@@ -36,6 +36,7 @@ function AppContent() {
             presentation: "modal",
           }}
         />
+
         <Stack.Screen
           name="map"
           options={{

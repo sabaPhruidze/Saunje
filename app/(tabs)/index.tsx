@@ -126,8 +126,8 @@ export default function HomeScreen() {
               curretUserId={user?.uid}
               onPress={() =>
                 router.push({
-                  pathname: "/spot/[id]",
-                  params: { id: item.id },
+                  pathname: "/spot/[id]", // ვეუბნებით ფაილის სახელს
+                  params: { id: item.id }, // ვეუბნებით რა ჩასვას [id]-ში
                 })
               }
             />

@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack } from "expo-router";
 import React, { useState } from "react";
@@ -15,9 +16,13 @@ interface SpotData {
 }
 
 const SpotDetailScreen = () => {
+  const { theme } = useTheme();
   const [spot, setSpot] = useState<SpotData | null>(null);
+  const isLight = theme === "light";
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={[styles.container, isLight ? styles.lightBg : styles.darkBg]}
+    >
       <Stack.Screen
         options={{
           headerTitle: spot?.title,
@@ -26,19 +31,29 @@ const SpotDetailScreen = () => {
         }}
       />
       <ScrollView>
-        <Image source={{ uri: spot?.imageUrl }} />
-        <View>
-          <Text>{spot?.title}</Text>
+        <Image source={{ uri: spot?.imageUrl }} style={styles.image} />
+        <View style={styles.content}>
+          <Text style={isLight ? styles.titleLight : styles.titleDark}>
+            {spot?.title}
+          </Text>
           {spot?.location && (
-            <View>
+            <View style={styles.locationContainer}>
               <Ionicons name="location" size={18} color="4C9A2A" />
-              <Text>
+              <Text
+                style={
+                  isLight ? styles.locationTextLight : styles.locationTextDark
+                }
+              >
                 Lat:{spot.location.latitude.toFixed(4)}, Lon:
                 {spot.location.longitude.toFixed(4)}
               </Text>
             </View>
           )}
-          <Text>{spot?.description}</Text>
+          <Text
+            style={isLight ? styles.descriptionLight : styles.descriptionDark}
+          >
+            {spot?.description}
+          </Text>
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,8 +1,17 @@
 import { useTheme } from "@/context/ThemeContext";
+import { db } from "@/firebaseConfing";
 import { Ionicons } from "@expo/vector-icons";
-import { Stack } from "expo-router";
-import React, { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Stack, useLocalSearchParams } from "expo-router";
+import { doc, getDoc } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface SpotData {
@@ -16,9 +25,62 @@ interface SpotData {
 }
 
 const SpotDetailScreen = () => {
+  const { id } = useLocalSearchParams(); //ვიღებთ ID_ს კონრეტული ბმულის
   const { theme } = useTheme();
   const [spot, setSpot] = useState<SpotData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const isLight = theme === "light";
+
+  useEffect(() => {
+    const fetchSpot = async () => {
+      if (!id) return;
+      try {
+        // წამოვიღე კონკრეტული დოკუმენტი ID-ის მიხედვით
+        const docRef = await doc(db, "Saunje", id as string);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          setSpot(docSnap.data() as SpotData);
+        }
+      } catch (e) {
+        console.error("ინფორმაციის წამოღებისას", ` მოხდა შეცდომა ${e}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSpot();
+  }, [id]);
+
+  if (loading) {
+    return (
+      <View
+        style={[
+          styles.container,
+          isLight ? styles.lightBg : styles.darkBg,
+          styles.center,
+        ]}
+      >
+        <ActivityIndicator size={30} color="#4C9A2A" />
+      </View>
+    );
+  }
+
+  if (!spot) {
+    return (
+      <View
+        style={[
+          styles.container,
+          isLight ? styles.lightBg : styles.darkBg,
+          styles.center,
+        ]}
+      >
+        <Text style={isLight ? styles.textLight : styles.textDark}>
+          საუნჯე ვერ მოიძებნა
+        </Text>
+      </View>
+    );
+  }
+
   return (
     <SafeAreaView
       style={[styles.container, isLight ? styles.lightBg : styles.darkBg]}

@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext";
 import { db } from "@/firebaseConfing";
 import { Ionicons } from "@expo/vector-icons";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
@@ -85,13 +85,6 @@ const SpotDetailScreen = () => {
     <SafeAreaView
       style={[styles.container, isLight ? styles.lightBg : styles.darkBg]}
     >
-      <Stack.Screen
-        options={{
-          headerTitle: spot?.title,
-          headerBackTitle: "უკან",
-          headerShown: false,
-        }}
-      />
       <ScrollView>
         <Image source={{ uri: spot?.imageUrl }} style={styles.image} />
         <View style={styles.content}>

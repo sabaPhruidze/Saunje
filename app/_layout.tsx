@@ -36,13 +36,19 @@ function AppContent() {
             presentation: "modal",
           }}
         />
-
         <Stack.Screen
           name="map"
           options={{
             headerShown: false,
             presentation: "modal", //modalად გაიხსნება
             animation: "slide_from_bottom", // შეგვიძლია ანიმაციაც შევუცვალოთ
+          }}
+        />
+        <Stack.Screen
+          name="spot/[id]" // ეს არის შენი ფაილის მისამართი
+          options={{
+            headerShown: false,
+            presentation: "modal",
           }}
         />
       </Stack>

@@ -188,7 +188,7 @@ export default function CreateSpotScreen() {
       <ThemeToggle />
       {/* well I need to rebuild first the firebase and correct it  */}
       <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss}
+        onPress={() => Keyboard.dismiss()}
         accessible={false}
       >
         <View style={styles.flex}>

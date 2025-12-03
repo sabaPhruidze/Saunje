@@ -1,11 +1,11 @@
 // app/_layout.tsx
+import OfflineNotice from "@/components/ui/OfflineNotice";
 import ThemeProvider, { useTheme } from "@/context/ThemeContext";
 import { UserProvider, useAuth } from "@/context/UserContext";
 import { Stack, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
-
 export const unstable_settings = { anchor: "(tabs)" };
 
 function AppContent() {
@@ -61,6 +61,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <UserProvider>
+        <OfflineNotice />
         <AppContent />
       </UserProvider>
     </ThemeProvider>

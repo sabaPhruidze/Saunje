@@ -9,17 +9,37 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sabaphru.Saunje",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "აპლიკაციას სჭირდება თქვენი ლოკაცია საუნჯის რუკაზე დასამატებლად.",
+        "NSCameraUsageDescription": "აპლიკაციას სჭირდება კამერა საუნჯის სურათის გადასაღებად.",
+        "NSPhotoLibraryUsageDescription": "აპლიკაციას სჭირდება გალერეა სურათის ასატვირთად."
+      }
     },
     "android": {
       "adaptiveIcon": {
-       "backgroundColor": "#121212",
-       "userInterfaceStyle": "automatic",
+        "backgroundColor": "#121212",
+        "userInterfaceStyle": "automatic",
         "barStyle": "light-content"
       },
       "softwareKeyboardLayoutMode": "resize",
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.sabaphru.Saunje",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBoMT3eZR7_oUMXzxzhPgnP2I-1jVKYbL8"
+        }
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "INTERNET"
+      ]
     },
     "web": {
       "output": "static",
@@ -38,12 +58,30 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "აპლიკაციას სჭირდება თქვენი ლოკაცია საუნჯის რუკაზე დასამატებლად."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "აპლიკაციას სჭირდება წვდომა გალერეაზე სურათის ასატვირთად.",
+          "cameraPermission": "აპლიკაციას სჭირდება წვდომა კამერაზე სურათის გადასაღებად."
+        }
       ]
-      
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "2b5c428c-5170-452b-b1d6-14c3f47e073e"
+      }
     }
   }
 }

@@ -49,6 +49,7 @@ function AppContent() {
           options={{
             headerShown: false,
             presentation: "modal",
+            // few
           }}
         />
       </Stack>

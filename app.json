@@ -7,7 +7,7 @@
     "icon": "./assets/images/icon.png",
     "scheme": "saunje",
     "userInterfaceStyle": "automatic",
-   "newArchEnabled": false,
+    "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sabaphru.Saunje",
@@ -71,7 +71,8 @@
           "photosPermission": "აპლიკაციას სჭირდება წვდომა გალერეაზე სურათის ასატვირთად.",
           "cameraPermission": "აპლიკაციას სჭირდება წვდომა კამერაზე სურათის გადასაღებად."
         }
-      ]
+      ],
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true,

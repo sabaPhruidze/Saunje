@@ -68,6 +68,7 @@ function MapScreen() {
           longitudeDelta: 0.0421,
         }}
         showsUserLocation={true}
+        mapPadding={{ top: 30, right: 10, bottom: 0, left: 0 }}
       >
         {spots.map((spot) => (
           <Marker

@@ -54,7 +54,7 @@ const LoginScreen = () => {
       edges={["top", "right", "left", "bottom"]}
     >
       <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss}
+        onPress={() => Keyboard.dismiss()}
         accessible={false}
       >
         <View style={styles.flex}>

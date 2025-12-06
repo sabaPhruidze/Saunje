@@ -58,7 +58,7 @@ const RegisterScreen = () => {
       edges={["top", "bottom", "left", "right"]}
     >
       <TouchableWithoutFeedback
-        onPress={() => Keyboard.dismiss}
+        onPress={() => Keyboard.dismiss()}
         accessible={false}
       >
         <View style={styles.flex}>

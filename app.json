@@ -18,9 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#121212",
-        "userInterfaceStyle": "automatic",
-        "barStyle": "light-content"
+        "backgroundColor": "#121212"
       },
       "softwareKeyboardLayoutMode": "resize",
       "edgeToEdgeEnabled": true,

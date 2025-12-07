@@ -26,6 +26,7 @@
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "package": "com.sabaphru.Saunje",
+      "googleServicesFile": "./google-services.json",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyBoMT3eZR7_oUMXzxzhPgnP2I-1jVKYbL8"

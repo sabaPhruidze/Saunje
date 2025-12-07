@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "259915431592",
+    "project_id": "saunje-5c5c2",
+    "storage_bucket": "saunje-5c5c2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259915431592:android:1e616f0018bd2285e50c9d",
+        "android_client_info": {
+          "package_name": "com.sabaphru.Saunje"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBd6ealoLj9rSp6Z01-rNysrNte6PenYHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

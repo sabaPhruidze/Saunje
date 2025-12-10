@@ -6,13 +6,40 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "env": {
+       "EXPO_PUBLIC_API_KEY" : "AIzaSyBoMT3eZR7_oUMXzxzhPgnP2I-1jVKYbL8",
+        "EXPO_PUBLIC_AUTH_DOMAIN" :"saunje-5c5c2.firebaseapp.com",
+        "EXPO_PUBLIC_PROJECT_ID" : "saunje-5c5c2",
+        "EXPO_PUBLIC_STORAGE_BUCKET" : "saunje-5c5c2.firebasestorage.app",
+        "EXPO_PUBLIC_MESSAGING_SENDER_ID" : "259915431592",
+        "EXPO_PUBLIC_APP_ID" : "1:259915431592:web:380744b016e9aa5fe50c9d"
+      }
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+       "EXPO_PUBLIC_API_KEY" : "AIzaSyBoMT3eZR7_oUMXzxzhPgnP2I-1jVKYbL8",
+        "EXPO_PUBLIC_AUTH_DOMAIN" :"saunje-5c5c2.firebaseapp.com",
+        "EXPO_PUBLIC_PROJECT_ID" : "saunje-5c5c2",
+        "EXPO_PUBLIC_STORAGE_BUCKET" : "saunje-5c5c2.firebasestorage.app",
+        "EXPO_PUBLIC_MESSAGING_SENDER_ID" : "259915431592",
+        "EXPO_PUBLIC_APP_ID" : "1:259915431592:web:380744b016e9aa5fe50c9d"
+      }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+       "EXPO_PUBLIC_API_KEY" : "AIzaSyBoMT3eZR7_oUMXzxzhPgnP2I-1jVKYbL8",
+        "EXPO_PUBLIC_AUTH_DOMAIN" :"saunje-5c5c2.firebaseapp.com",
+        "EXPO_PUBLIC_PROJECT_ID" : "saunje-5c5c2",
+        "EXPO_PUBLIC_STORAGE_BUCKET" : "saunje-5c5c2.firebasestorage.app",
+        "EXPO_PUBLIC_MESSAGING_SENDER_ID" : "259915431592",
+        "EXPO_PUBLIC_APP_ID" : "1:259915431592:web:380744b016e9aa5fe50c9d"
+      }
     }
   },
   "submit": {
